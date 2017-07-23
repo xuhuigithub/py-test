@@ -1,0 +1,12 @@
+#!/bin/env python
+f = file('test.txt','r')
+print f.readline()
+print f.tell()
+print f.readline()
+print f.tell()
+print f.readline()
+f.seek(0)
+print f.tell()
+print f.read()
+print f.tell()
+f.close()
