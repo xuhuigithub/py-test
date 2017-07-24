@@ -15,7 +15,7 @@ def genpin(lenthy):
 
 
 if __name__ == "__main__":
-  print genpin(6)
+  print genpin(7)
     
       
       
