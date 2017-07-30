@@ -1,15 +1,12 @@
 #!/bin/env python
-import os
-import sys
-#import paramiko
 user = "gsinfo"
 hostlist = ['192.168.1.1','192.168.1.2']
 applist = ["dedicated-line","dedicated-web"]
 def menu(num,menu_list):
   list_tmp = []
   for i in menu_list:
-     num += 1
-     list_tmp.append("%s    %s"%(num,i))
+    num += 1
+    list_tmp.append("%s    %s"%(num,i))
   menu = "\r\n".join(list_tmp)
   return menu
 
@@ -22,8 +19,8 @@ def chose(menu_list,prompt):
     chosed_num = raw_input('%s\n'%(prompt)).strip().split()
     for i in chosed_num:
       chosed += [menu_list[int(i)]]
-    if len(chosed) > 0:
-      menu_chosed = 1
+      print chosed,len(chosed)
+      menu_chosed = 1 if len(chosed) > 0 else 0
   return chosed
 
 

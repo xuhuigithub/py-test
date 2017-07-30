@@ -10,7 +10,6 @@ def shard(data,process=7):
   multiplication = lambda x,y:x*y
   delivery = divmod(len(data),process)
   step = delivery[0]
-  remainder = delivery[1]
   for num in xrange(0, process):
     start = multiplication(step,num)
     end = len(data) if  num == (process-1) else multiplication((num+1),step)
