@@ -3,7 +3,7 @@
 
 def Filter_before(request,kargs):
 #7、Filter_before经过装饰的函数执行的第一个函数
-  return "I'm before"
+  return "I'm before %s %s" %(request,kargs)
 
 def Filter_after(request,kargs):
   return "I'm after"
@@ -13,6 +13,7 @@ def Filter(before_func,after_func):
   def outer(main_func):
 #4、加载outer函数到内存中，并且确定要wrapper的函数
     def wrapper(request,kargs):
+      #这里的参数是一个接收器，接收来自要包装函数的参数
 #5、加载wrapper函数到内存中 返回真正的wrapper，也就是最后要装饰的函数是等于它的
       before_result = before_func(request,kargs)
 #6、按顺序执行函数内部代码最后返回结果
