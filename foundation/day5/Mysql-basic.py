@@ -2,7 +2,8 @@
 # encoding: utf-8
 
 import MySQLdb
-
+from MySQLdb.constants import FIELD_TYPE
+my_conv = { FIELD_TYPE.LONG: int,FIELD_TYPE.STRING: list }
 '''
 conn = MySQLdb.connect(
   host='192.168.100.150',
@@ -85,3 +86,79 @@ print data
 #返回值样例
 # {'user_name': u'xuhui6', 'user_id': 1L, 'user_pass': u'123456'}, {'user_name': u'xuhui7', 'user_id': 22L, 'user_pass': u'haha'}, {'user_name': u'xuhui6', 'user_id': 21L, 'user_pass': u'hehe'}, {'user_name': u'xuhui7', 'user_id': 20L, 'user_pass': u'haha'})
 '''
+
+
+'''
+conn = MySQLdb.connect(
+  host='192.168.100.150',
+  user='root',
+  passwd='123456',
+  db='person',
+  port=3306,
+  charset='utf8'
+)
+#Mysql fetchone
+
+cur = conn.cursor()
+cur.execute('select * from users')
+data = cur.fetchone()
+#每取到一条数据指针向下走一次
+print data
+data = cur.fetchone()
+print data
+#第二次取到的数据是第一次的下一条数据
+
+#更改指针位置相对定位和绝对定位
+##相对定位
+cur = conn.cursor()
+cur.execute('select * from users')
+data = cur.fetchone()
+#每取到一条数据指针向下走一次
+print data
+cur.scroll(-1,mode='relative')
+#相对于现在的指针位置-1
+data = cur.fetchone()
+print data
+##绝对定位
+cur.scroll(2,mode='relative')
+#指针的位置以正整数或者负数表达
+data = cur.fetchone()
+print data
+
+cur.scroll(0,mode='absolute')
+#将指针放回到起点，最小为-1
+data = cur.fetchone()
+print data
+
+#获取上一条数据的自增ID
+#用处：在做表关联时，将自增ID取出存入与其相关联的表
+cur = conn.cursor()
+sql = 'insert into users (user_name,user_pass) values(%s,%s)'
+params = ('xuhui','1111111',)
+cur.execute(sql,params)
+conn.commit()
+users_id = cur.lastrowid
+#获得上一次插入数据的自增ID
+print users_id
+
+cur.close()
+conn.close()
+'''
+
+conn = MySQLdb.connect(
+  host='192.168.61.84',
+  user='xuhui',
+  passwd='xuhui',
+  db='zabbix',
+  port=3306,
+  conv = my_conv,
+#  charset = 'utf8'
+)
+cur = conn.cursor()
+cur.execute('select * from actions')
+datas = cur.fetchall()
+print datas
+for i in datas:
+  print i
+cur.close()
+conn.close()
