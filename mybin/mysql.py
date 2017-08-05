@@ -2,8 +2,10 @@
 import sys
 import MySQLdb
 import multiprocessing
-reload(sys)
-sys.setdefaultencoding('utf8')
+from MySQLdb.constants import FIELD_TYPE
+my_conv = { FIELD_TYPE.LONG: int }
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 ps = 4
 class extract_mysql():
   def __init__(self,host,port,user,passwd,db):
@@ -14,7 +16,8 @@ class extract_mysql():
           user = user,
           passwd = passwd,
           db = db,
-          charset = "gbk"
+          charset = "gbk",
+#          conv = my_conv
         )
       self.conncur = self.conn.cursor()
     except Exception as e:
