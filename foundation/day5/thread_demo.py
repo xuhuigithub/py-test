@@ -2,6 +2,7 @@
 #coding:utf-8
 #当运行这个程序时创建了一个主进程带有一个主线程，主线程又创造了一个子线程去执行函数Foo
 #子线程的最大存活时间不超过主线程的最大存活时间，也就是说当主线程销毁时子线程也就没有了，不管子线程是否设置在后台运行
+#多线程适用于多IO处理（不经过CPU），多进程适用于运算
 
 from threading import Thread
 import time
@@ -23,7 +24,6 @@ t1.start()
 print t1.getName()
 time.sleep(10)
 print 'after'
-print '还会阻塞吗'
 #time.sleep(10)
 #将主进程阻塞住10秒保证其不退出，子进程就不会结束
 
