@@ -1,0 +1,10 @@
+host_info:
+- ip: "192.168.100.141"
+  username: "root"
+  password: "xuhui"
+- ip: "192.168.100.142"
+  username: "root"
+  password: "xuhui"
+- ip: "192.168.100.143"
+  username: "root"
+  password: "xuhui"
