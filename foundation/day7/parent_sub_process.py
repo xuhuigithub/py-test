@@ -14,3 +14,4 @@ p1 = Process(target=info,args=('hehe',))
 p1.start()
 p1.join()
 #默认的多进程是fork方法，父进程派生子进程
+#fork 方法怕生进程是完全复制一份父进程的内存的，所以在使用时要规划好
