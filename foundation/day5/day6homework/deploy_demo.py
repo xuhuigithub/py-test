@@ -17,7 +17,11 @@ class deploy(object):
     self.remoteport = remoteport
   def varify(self):
     self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    self.ssh.connect(self.remotehost, self.remoteport, self.remoteuser,self.remotepassword)
+    if not self.remotekey:
+      self.ssh.connect(self.remotehost, self.remoteport, self.remoteuser,self.remotepassword)
+    else:
+      __key = paramiko.RSAKey.from_private_key(self.remotekey)
+      self.ssh.connect(self.remotehost,self.remoteport,self.remoteuser,__key)
   def remote_command(self,exec_command):
     self.varify()
     try:
@@ -28,10 +32,7 @@ class deploy(object):
       print stdout.read()
 for host in data['host_info']:
   host_queue.put(deploy(host['ip'],host['username'],host['password']))
-# stdin,stdout,stderr = host_41.remote_command('ls')
-# print stdout.read()
-# t1 = threading.Thread(target=host_41.remote_command,args=('ls',))
-# print t1.start()
+
 while True:
   if host_queue.qsize() > 0:
     threading.Thread(target=host_queue.get().remote_command,args=('yum install httpd -y',)).start()
