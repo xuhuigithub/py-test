@@ -10,7 +10,6 @@ class Mysmtplib(SMTP):
     SMTP.__init__(self,timeout=timeout)
 
   def connect(self, host='localhost', port=0,keepalvie=False,**keepalive_kwargs):
-    SMTP.connect(self,host=host,port=port)
     if keepalvie:
       after_idle_sec = keepalive_kwargs.get('after_idle_sec')
       interval_sec = keepalive_kwargs.get('interval_sec')
@@ -38,12 +37,13 @@ class Mysmtplib(SMTP):
       elif platform == "win32":
         #Windows
         pass
+    SMTP.connect(self, host=host, port=port)
 
 
 if __name__ == "__main__":
-  keepalive_kwargs = {'after_idle_sec':1,'interval_sec':3,'max_fails':5}
-  smtpObj=Mysmtplib(timeout=20)
-  smtpObj.connect('smtp.chinadaas.com',25,keepalvie=True,**keepalive_kwargs)
-  smtpObj.login('xuhui@chinadaas.com','****')
-  smtpObj.close()
+    keepalive_kwargs = {'after_idle_sec':1,'interval_sec':3,'max_fails':5}
+    smtpObj=Mysmtplib(timeout=20)
+    smtpObj.connect('smtp.chinadaas.com',25,keepalvie=True,**keepalive_kwargs)
+    smtpObj.login('xuhui@chinadaas.com','****')
+    smtpObj.close()
 
